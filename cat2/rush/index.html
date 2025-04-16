@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>喵星人乐园</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff7e67;
+            --secondary: #a2d5f2;
+            --dark: #07689f;
+            --light: #fafafa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', 'Ma Shan Zheng', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        header {
+            margin-bottom: 3rem;
+            animation: fadeIn 1s ease;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 1rem;
+        }
+
+        .app-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .app-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--primary);
+        }
+
+        .app-card:nth-child(2)::before {
+            background: var(--secondary);
+        }
+
+        .app-card:nth-child(3)::before {
+            background: #a8df65;
+        }
+        .app-card:nth-child(4)::before {
+            background: #a80f61;
+        }
+        .app-card:nth-child(5)::before {
+            background: #ffd166;
+        }
+        .app-card:nth-child(6)::before {
+            background: #2f31cc;
+        }
+        .app-card:nth-child(7)::before {
+            background: #e36c48;
+        }
+        .app-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+
+        .app-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .app-desc {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: var(--dark);
+            transform: scale(1.05);
+        }
+
+        footer {
+            margin-top: 4rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 猫猫元素装饰 */
+        .cat-decoration {
+            position: absolute;
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .cat-1 {
+            top: 10%;
+            left: 5%;
+            font-size: 10rem;
+            transform: rotate(-15deg);
+        }
+
+        .cat-2 {
+            bottom: 10%;
+            right: 5%;
+            font-size: 8rem;
+            transform: rotate(15deg);
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="container">
+        <header>
+            <h1>喵星人乐园</h1>
+            <p class="subtitle">专为爱猫人士打造的趣味工具集合</p>
+        </header>
+
+        <div class="apps-grid">
+            <!-- 猫猫生成器卡片 -->
+            <div class="app-card" @click="navigateTo('cat-generator')">
+                <div class="app-icon">🐱</div>
+                <h2 class="app-title">随机猫猫生成器</h2>
+                <p class="app-desc">点击获取世界各地可爱的猫咪照片，还能学习猫咪小知识！</p>
+                <button class="btn">立即体验</button>
+            </div>
+
+            <!-- 音乐播放器卡片 -->
+            <div class="app-card" @click="navigateTo('music-player')">
+                <div class="app-icon">🎵</div>
+                <h2 class="app-title">猫咪音乐厅</h2>
+                <p class="app-desc">放松心情，聆听专为猫咪设计的舒缓音乐，你和主子都会喜欢~</p>
+                <button class="btn">播放音乐</button>
+            </div>
+
+            <!-- 计算器卡片 -->
+            <div class="app-card" @click="navigateTo('calculator')">
+                <div class="app-icon">🧮</div>
+                <h2 class="app-title">喵喵计算器</h2>
+                <p class="app-desc">带猫咪主题的趣味计算器，让数学计算不再枯燥！</p>
+                <button class="btn">开始计算</button>
+            </div>
+
+            <!-- 音乐播放器卡片 -->
+            <div class="app-card" @click="navigateTo('Cat-Gallery')">
+                <div class="app-icon">🐈‍</div>
+                <h2 class="app-title">猫咪秘密基地</h2>
+                <p class="app-desc">只属于你的秘密花园</p>
+                <button class="btn">小心探寻</button>
+            </div>
+
+            <!-- 音乐播放器卡片 -->
+            <div class="app-card" @click="navigateTo('CatDown')">
+                <div class="app-icon">📝</div>
+                <h2 class="app-title">猫咪记事本</h2>
+                <p class="app-desc">放松心情，聆听专为猫咪设计的舒缓音乐，你和主子都会喜欢~</p>
+                <button class="btn">开始记录</button>
+            </div>
+            <div class="app-card" @click="navigateTo('Cat-Boot')">
+                <div class="app-icon">🐭</div>
+                <h2 class="app-title">猫咪花名册</h2>
+                <p class="app-desc">放松心情，聆听专为猫咪设计的舒缓音乐，你和主子都会喜欢~</p>
+                <button class="btn">点名</button>
+            </div>
+            <div class="app-card" @click="navigateTo('Cat_Park')">
+                <div class="app-icon">😼</div>
+                <h2 class="app-title">猫咪游乐园</h2>
+                <p class="app-desc">放松心情，聆听专为猫咪设计的舒缓音乐，你和主子都会喜欢~</p>
+                <button class="btn">出发！！！</button>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2023 喵星人乐园 | 用❤️为猫咪爱好者打造</p>
+        </footer>
+
+        <!-- 装饰元素 -->
+        <div class="cat-decoration cat-1">🐾</div>
+        <div class="cat-decoration cat-2">🐾</div>
+    </div>
+</div>
+
+<script>
+    const { createApp } = Vue;
+
+    createApp({
+        methods: {
+            navigateTo(page) {
+                window.location.href = `${page}.html`;
+            }
+        },
+        setup(){
+            // 在Vue的setup()中添加
+            const catEmojis = ['😺', '😸', '😹', '😻', '😼', '😽', '🙀', '🐱', '🐈', '🐈‍⬛'];
+
+            const createCatEmojiEffect = (x, y) => {
+                const emoji = document.createElement('div');
+                emoji.textContent = catEmojis[Math.floor(Math.random() * catEmojis.length)];
+                emoji.style.position = 'fixed';
+                emoji.style.left = `${x}px`;
+                emoji.style.top = `${y}px`;
+                emoji.style.fontSize = '30px';
+                emoji.style.pointerEvents = 'none';
+                emoji.style.zIndex = '9999';
+                emoji.style.transform = 'translate(-50%, -50%)';
+                emoji.style.animation = 'emojiFloat 1.5s ease-out forwards';
+
+                document.body.appendChild(emoji);
+
+                setTimeout(() => {
+                    emoji.remove();
+                }, 1500);
+            };
+
+// 添加CSS动画
+            const style = document.createElement('style');
+            style.textContent = `
+            @keyframes emojiFloat {
+                0% {
+                    transform: translate(-50%, -50%) scale(1);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translate(-50%, -150%) scale(1.5);
+                    opacity: 0;
+                }
+            }
+        `;
+            document.head.appendChild(style);
+
+// 绑定点击事件
+            window.addEventListener('click', (e) => {
+                createCatEmojiEffect(e.clientX, e.clientY);
+
+                // 50%概率显示爪印
+                if (Math.random() > 0.5) {
+                    const paw = document.createElement('div');
+                    paw.innerHTML = '🐾';
+                    paw.style.position = 'fixed';
+                    paw.style.left = `${e.clientX + (Math.random() * 40 - 20)}px`;
+                    paw.style.top = `${e.clientY + (Math.random() * 40 - 20)}px`;
+                    paw.style.fontSize = '24px';
+                    paw.style.opacity = '0.7';
+                    paw.style.animation = 'pawFade 2s forwards';
+                    document.body.appendChild(paw);
+
+                    setTimeout(() => paw.remove(), 2000);
+                }
+            });
+        }
+    }).mount('#app');
+</script>
+</body>
+</html>
