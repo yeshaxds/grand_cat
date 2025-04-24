@@ -149,14 +149,15 @@ export default {
 <style scoped>
 
 .container {
-  max-width: 1200px;
+ 
   margin: 0 auto;
   text-align: center;
 }
 
 .apps-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: [start] 1fr [middle] 1fr [middle2] 1fr [end];
+  /* grid-template-rows: [top] 100px [center] auto [bottom]; */
   gap: 2rem;
   padding: 1rem;
 
@@ -188,4 +189,13 @@ footer {
   0% { opacity: 0.7; }
   100% { opacity: 0; }
 }
+
+@media (max-width: 768px) {
+  .apps-grid {
+    display: grid;
+    grid-template-columns: [start] 1fr [end];
+    padding: 1rem;
+  }
+}
+
 </style>

@@ -1,6 +1,5 @@
 <template>
   <router-view />
-<!--  <router-view> 是 Vue Router 提供的组件，作为路由内容的出口-->
 </template>
 
 <script>
@@ -23,7 +22,7 @@ export default {
 body {
   font-family: 'Poppins', 'Ma Shan Zheng', sans-serif;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  min-height: 100vh;
+
   padding: 2rem;
   margin: 0 auto;
 }

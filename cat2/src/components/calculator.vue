@@ -150,13 +150,15 @@ window.addEventListener('click', (e) => {
 </script>
 
 <template>
-  <div class="calculator">
+  <div>
     <div class="main-wrapper">
       <div class="left-decoration">
         <div class="cat-silhouette">🐈</div>
         <div class="cat-fact">
           {{ catFacts[currentCatFact] }}
-          <button @click="changeCatFact" class="cat-btn">换一个</button>
+          <div>
+            <button @click="changeCatFact" class="cat-btn">换一个</button>
+          </div>
         </div>
       </div>
       <div class="container">
@@ -235,7 +237,7 @@ window.addEventListener('click', (e) => {
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.1);
   overflow: hidden;
-  color: #333;
+  color: #554f4f;
 }
 
 header {
@@ -409,6 +411,7 @@ footer {
   text-align: center;
   font-size: 0.9rem;
   backdrop-filter: blur(5px);
+  color: #1b0f0f;
 }
 
 /* 右侧装饰元素 */
@@ -423,7 +426,9 @@ footer {
   margin-bottom: 30px;
   animation: spin 8s linear infinite;
 }
-
+.cat-history{
+  color: #353232;
+}
 .history-item {
   padding: 8px;
   border-bottom: 1px dotted #eee;
