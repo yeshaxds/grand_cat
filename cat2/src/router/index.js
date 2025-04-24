@@ -6,7 +6,7 @@ import CatDown from "../components/CatDown.vue";
 import calculator from "../components/calculator.vue"
 import CatGallery from "../components/Cat-Gallery.vue";
 import CatBoot from "../components/Cat-Boot.vue";
-import Cat_park from "../components/Cat_park.vue";
+import CatPark from "../components/Cat_park.vue";
 
 const routes = [
     {
@@ -47,13 +47,12 @@ const routes = [
     {
         path: '/Cat_park',
         name: 'CatPark',
-        component: Cat_park
+        component: CatPark
     }
-
 ]
 
 const router = createRouter({
-    history: createWebHistory(process.env.BASE_URL),
+    history: createWebHistory(),
     routes
 })
 

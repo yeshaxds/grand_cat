@@ -41,7 +41,7 @@ const compute = () => {
   const prev = parseFloat(previousOperand.value);
   const current = parseFloat(currentOperand.value);
   if (isNaN(prev) || isNaN(current)) return;
-
+  // console.log(operation.value)
   switch (operation.value) {
     case '+':
       computation = prev + current;
@@ -60,13 +60,14 @@ const compute = () => {
   }
 
   currentOperand.value = computation;
+  var currrent = operation.value;
   operation.value = null;
   previousOperand.value = '';
 
   history.value.unshift(
-      `${prev} ${operation.value} ${current} = ${computation}`
+      `${prev} ${currrent} ${current} = ${computation}`
   );
-  if (history.value.length > 5) history.value.pop();
+  if (history.value.length > 10) history.value.pop();
 };
 
 // 清空
@@ -353,22 +354,15 @@ footer {
   background: rgba(219, 236, 228, 0.71);
   border: none;
   padding: 8px 15px;
-  //border-radius: 20px;
   color: #ff9fdc;
   font-family: 'Ma Shan Zheng', cursive;
-  //cursor: pointer;
-  //transition: all 0.3s;
-  //backdrop-filter: blur(5px);
   border: 1px solid rgba(189, 177, 104, 0.5);
 }
 .home-btn {
-  //position: absolute;
-  //left: 20px;
   margin-top: 10px;
   background: rgba(255,255,255,0.3);
   border: none;
   padding: 8px 15px;
-  //border-radius: 20px;
   color: #65e03e;
   font-family: 'Ma Shan Zheng', cursive;
   cursor: pointer;
