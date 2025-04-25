@@ -41,7 +41,7 @@ const getCatEmoji = (appearance) => {
 const fetchCats = async () => {
   try {
     loading.value = true;
-    const response = await axios.get('http://localhost:8080/api/cats', {
+    const response = await axios.get('http://localhost:8081/api/cats', {
       params: { q: searchQuery.value },
       headers: { 'Content-Type': 'application/json' }  // 明确请求头
     });
@@ -83,10 +83,10 @@ const saveCat = async () => {
   try {
     if (isEditing.value) {
       // 更新猫咪
-      await axios.put(`http://localhost:8080/api/cats/${currentCat.value.id}`, currentCat.value);
+      await axios.put(`http://localhost:8081/api/cats/${currentCat.value.id}`, currentCat.value);
     } else {
       // 添加新猫咪
-      await axios.post('http://localhost:8080/api/cats', currentCat.value);
+      await axios.post('http://localhost:8081/api/cats', currentCat.value);
     }
     showModal.value = false;
     await fetchCats(); // 刷新列表
@@ -101,7 +101,7 @@ const deleteCat = async (id) => {
   if (!confirm('确定要删除这只猫咪吗？')) return;
 
   try {
-    await axios.delete(`http://localhost:8080/api/cats/${id}`);
+    await axios.delete(`http://localhost:8081/api/cats/${id}`);
     fetchCats(); // 刷新列表
   } catch (error) {
     console.error('删除猫咪失败:', error);

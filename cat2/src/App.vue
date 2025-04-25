@@ -32,8 +32,8 @@ export default {
 body {
   font-family: 'Poppins', 'Ma Shan Zheng', sans-serif;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-
-  padding: 2rem;
+  min-height: 100vh;
+  /* padding: 2rem; */
   margin: 0 auto;
 }
 

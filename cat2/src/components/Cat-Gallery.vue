@@ -69,7 +69,6 @@ const unlocked = ref(false)
 const selectedAnswer = ref(null)
 const answered = ref(false)
 const correct = ref(false)
-const loading = ref(false)
 
 // 题库
 const questions = [
@@ -98,12 +97,12 @@ const currentQuestion = ref(
 // 猫咪照片库
 const photos = ref([
   {
-    url: 'https://placekitten.com/800/600',
+    url: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fgss0.baidu.com%2F-4o3dSag_xI4khGko9WTAnF6hhy%2Fzhidao%2Fpic%2Fitem%2Fdbb44aed2e738bd4ff254584a28b87d6277ff97b.jpg&refer=http%3A%2F%2Fgss0.baidu.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1656578670&t=f5c439b86a9ff1722a1f6ce1eb0c75ea',
     title: '小橘的午后',
     description: '阳光下的慵懒时光'
   },
   {
-    url: 'https://placekitten.com/801/600',
+    url: 'https://soutushenqi.com/image/detail?largeUrl=http%3A%2F%2Fhbimg.huaban.com%2Fdd0a509b25170fb22094a9b0ab0dc0d7f159d03d13e614f-Zb1sQt&desc=%E7%8F%82%E8%8E%B1%E5%A1%94-%E6%82%94%E7%BD%AA%E7%9A%84%E6%9A%AE%E5%AE%B4&width=13653&height=7680&key=DJOhGgCM',
     title: '奶糖的凝视',
     description: '你在看我吗？'
   },
@@ -148,15 +147,27 @@ const checkAnswer = () => {
     correct.value = selectedAnswer.value === currentQuestion.value.answer
 
     if (correct.value) {
+      // 先触发特效
+      // console.log("答案正确，创建特效！开始添加特效元素...")
       createFloatingCats()
       createConfetti()
 
+      // 延长等待时间，让特效更明显
       setTimeout(() => {
+        // console.log("特效即将结束，准备移除特效元素...")
         removeEffects()
-        unlocked.value = true
-      }, 1500)
+        // console.log("进入猫咪乐园...")
+        
+        // 再等待一小段时间确保动画元素被清理
+        setTimeout(() => {
+          unlocked.value = true
+        }, 500)
+      }, 6000)
     } else {
       alert(`答错了呢~ 正确答案是: ${currentQuestion.value.options[currentQuestion.value.answer]}`)
+      // 重置答案选择，允许再次尝试
+      answered.value = false
+      selectedAnswer.value = null
     }
   } else {
     unlocked.value = true
@@ -166,39 +177,94 @@ const checkAnswer = () => {
 // 创建漂浮猫咪特效
 const createFloatingCats = () => {
   const cats = ['🐱', '🐈', '🐈‍⬛', '😺', '😸', '😹', '😻', '😼', '😽']
+  
+  // console.log("开始创建猫咪特效")
+  
+  // 创建样式标签，确保动画关键帧存在
+  const styleEl = document.createElement('style')
+  styleEl.innerHTML = `
+    @keyframes floatUp {
+      0% { transform: translateY(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; transform: translateY(-80vh); }
+      100% { transform: translateY(-100vh); opacity: 0; }
+    }
+  `
+  document.head.appendChild(styleEl)
+  
   for (let i = 0; i < 20; i++) {
     const cat = document.createElement('div')
-    cat.className = 'floating-cat'
     cat.textContent = cats[Math.floor(Math.random() * cats.length)]
-    cat.style.left = `${Math.random() * 100}vw`
-    cat.style.animationDelay = `${Math.random() * 5}s`
-    cat.style.fontSize = `${Math.random() * 2 + 1.5}rem`
+    
+    // 使用内联样式设置所有属性
+    Object.assign(cat.style, {
+      position: 'fixed',
+      zIndex: '9999',
+      left: `${Math.random() * 100}vw`,
+      bottom: '0',
+      fontSize: `${Math.random() * 2 + 1.5}rem`,
+      animation: `floatUp ${Math.random() * 3 + 4}s ease-out forwards`,
+      animationDelay: `${Math.random() * 2}s`,
+      pointerEvents: 'none'
+    })
+    
     document.body.appendChild(cat)
-
-    setTimeout(() => cat.remove(), 10000)
+    // console.log("添加了一个猫咪元素:", cat.textContent)
+    
+    setTimeout(() => cat.remove(), 8000)
   }
 }
 
 // 创建彩色纸屑特效
 const createConfetti = () => {
   const colors = ['#ff9a76', '#a2d5f2', '#ff6b6b', '#07689f', '#ffd166', '#06d6a0']
-  for (let i = 0; i < 100; i++) {
+  
+  // console.log("开始创建纸屑特效")
+  
+  // 创建样式标签，确保动画关键帧存在
+  const styleEl = document.createElement('style')
+  styleEl.innerHTML = `
+    @keyframes fallDown {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      50% { opacity: 1; transform: translateY(50vh) rotate(360deg); }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+  `
+  document.head.appendChild(styleEl)
+  
+  for (let i = 0; i < 50; i++) {
     const confetti = document.createElement('div')
-    confetti.className = 'confetti'
-    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)]
-    confetti.style.left = `${Math.random() * 100}vw`
-    confetti.style.width = `${Math.random() * 10 + 5}px`
-    confetti.style.height = `${Math.random() * 10 + 5}px`
-    confetti.style.animationDelay = `${Math.random() * 0.5}s`
+    
+    // 使用内联样式设置所有属性
+    Object.assign(confetti.style, {
+      position: 'fixed',
+      zIndex: '9999',
+      left: `${Math.random() * 100}vw`,
+      top: '0',
+      width: `${Math.random() * 10 + 5}px`,
+      height: `${Math.random() * 10 + 5}px`,
+      backgroundColor: colors[Math.floor(Math.random() * colors.length)],
+      animation: `fallDown ${Math.random() * 2 + 3}s ease-in forwards`,
+      animationDelay: `${Math.random() * 1}s`,
+      pointerEvents: 'none'
+    })
+    
     document.body.appendChild(confetti)
-
-    setTimeout(() => confetti.remove(), 3000)
+    // console.log("添加了一个纸屑元素")
+    
+    setTimeout(() => confetti.remove(), 5000)
   }
 }
 
 // 移除所有特效元素
 const removeEffects = () => {
-  document.querySelectorAll('.floating-cat, .confetti').forEach(el => el.remove())
+  // console.log("开始移除所有特效元素")
+  document.querySelectorAll('style[type="text/css"]').forEach(el => {
+    if (el.innerHTML.includes('keyframes floatUp') || el.innerHTML.includes('keyframes fallDown')) {
+      el.remove()
+    }
+  })
+  // console.log("特效清理完成")
 }
 
 // 显示大图
@@ -206,7 +272,7 @@ const showPhoto = (index) => {
   alert(`正在查看: ${photos.value[index].title}\n${photos.value[index].description}`)
 }
 
-// 触发文件上传
+// 触发文件上传 一种自己设计按钮的方式
 const triggerUpload = () => {
   document.getElementById('photo-upload').click()
 }
@@ -458,6 +524,8 @@ h1 {
   font-size: 1.2rem;
 }
 
+/* 动画特效已使用JavaScript动态添加，不再需要这些CSS类 */
+
 /* 动画定义 */
 @keyframes emojiFloat {
   0% {
@@ -471,45 +539,5 @@ h1 {
   }
 }
 
-@keyframes pawFade {
-  0% {
-    opacity: 0.7;
-  }
-
-  100% {
-    opacity: 0;
-  }
-}
-
-@keyframes float {
-  0% {
-    transform: translateY(0) rotate(0deg);
-    opacity: 0;
-  }
-
-  10% {
-    opacity: 0.7;
-  }
-
-  90% {
-    opacity: 0.7;
-  }
-
-  100% {
-    transform: translateY(-100vh) rotate(360deg);
-    opacity: 0;
-  }
-}
-
-@keyframes confetti {
-  0% {
-    transform: translateY(0) rotate(0deg);
-    opacity: 1;
-  }
-
-  100% {
-    transform: translateY(100vh) rotate(720deg);
-    opacity: 0;
-  }
-}
+/* 以下动画在JavaScript中动态添加，此处移除 */
 </style>
