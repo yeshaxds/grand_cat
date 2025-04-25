@@ -32,10 +32,10 @@ npm run build
 ## <span style="color:red">待修改事项</span>
 <div>
 <ul>
-    <li style="color:rgb(236, 137, 39); background-color: rgb(85, 238, 207)">✨ 鼠标点击特效放大一点</li>
+    <li style="color:rgb(236, 137, 39); background-color: rgb(85, 238, 207)">✨ 鼠标点击特效放大一点(done)</li>
     <li style="color:rgb(236, 137, 39);  background-color: rgb(167, 121, 223)">🧹 去掉没有意义的CSS特效</li>
-    <li style="color:rgb(236, 137, 39); background-color: rgb(149, 226, 101)">🔧 修改JS
-</li>
+    <li style="color:rgb(236, 137, 39); background-color: rgb(149, 226, 101)">🔧 修改JS</li>
+    <li style="color:rgb(236, 137, 39); background-color: rgb(60, 194, 160)">🔧 修改Gallery的特效错误</li>
 </ul>
 </div>
 <style>

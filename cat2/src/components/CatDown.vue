@@ -20,7 +20,7 @@ const generateCatFileName = () => {
   let attempts = 0;
 
   // 确保文件名不重复
-  while(usedFileNames.value.has(fileName) && attempts < 100) {
+  while (usedFileNames.value.has(fileName) && attempts < 100) {
     randomNum = Math.floor(Math.random() * 100);
     fileName = `${prefix}的${suffix}_${randomNum}.txt`;
     attempts++;
@@ -38,7 +38,7 @@ const compiledMarkdown = computed(() => {
 const saveToFile = async () => {
   try {
     const fileName = generateCatFileName();
-    const blob = new Blob([markdownText.value], {type: 'text/plain;charset=utf-8'});
+    const blob = new Blob([markdownText.value], { type: 'text/plain;charset=utf-8' });
 
     // 使用showSaveFilePicker API (现代浏览器支持)
     if ('showSaveFilePicker' in window) {
@@ -46,7 +46,7 @@ const saveToFile = async () => {
         suggestedName: fileName,
         types: [{
           description: '文本文件',
-          accept: {'text/plain': ['.txt']}
+          accept: { 'text/plain': ['.txt'] }
         }]
       });
 
@@ -109,58 +109,6 @@ const goToHome = () => {
   // 或方案2：Vue Router跳转
   router.push('/');
 };
-const catEmojis = ['😺', '😸', '😹', '😻', '😼', '😽', '🙀', '🐱', '🐈', '🐈‍⬛']
-
-const createCatEmojiEffect = (x, y) => {
-  const emoji = document.createElement('div')
-  emoji.textContent = catEmojis[Math.floor(Math.random() * catEmojis.length)]
-  emoji.style.position = 'fixed'
-  emoji.style.left = `${x}px`
-  emoji.style.top = `${y}px`
-  emoji.style.fontSize = '30px'
-  emoji.style.pointerEvents = 'none'
-  emoji.style.zIndex = '9999'
-  emoji.style.transform = 'translate(-50%, -50%)'
-  emoji.style.animation = 'emojiFloat 1.5s ease-out forwards'
-  document.body.appendChild(emoji)
-  setTimeout(() => emoji.remove(), 1500)
-}
-
-// 添加CSS动画
-const style = document.createElement('style');
-style.textContent = `
-            @keyframes emojiFloat {
-                0% {
-                    transform: translate(-50%, -50%) scale(1);
-                    opacity: 1;
-                }
-                100% {
-                    transform: translate(-50%, -150%) scale(1.5);
-                    opacity: 0;
-                }
-            }
-        `;
-document.head.appendChild(style);
-
-// 绑定点击事件
-window.addEventListener('click', (e) => {
-  createCatEmojiEffect(e.clientX, e.clientY);
-
-  // 50%概率显示爪印
-  if (Math.random() > 0.5) {
-    const paw = document.createElement('div');
-    paw.innerHTML = '🐾';
-    paw.style.position = 'fixed';
-    paw.style.left = `${e.clientX + (Math.random() * 40 - 20)}px`;
-    paw.style.top = `${e.clientY + (Math.random() * 40 - 20)}px`;
-    paw.style.fontSize = '24px';
-    paw.style.opacity = '0.7';
-    paw.style.animation = 'pawFade 2s forwards';
-    document.body.appendChild(paw);
-
-    setTimeout(() => paw.remove(), 2000);
-  }
-});
 </script>
 
 <template>
@@ -199,12 +147,8 @@ window.addEventListener('click', (e) => {
             <span>📂</span> 从文件读取
           </button>
           <div style="text-align: center;">
-            <button
-                @click="goToHome"
-                class="return_home"
-                onmouseover="this.style.transform='translateX(-3px)'"
-                onmouseout="this.style.transform='none'"
-            >
+            <button @click="goToHome" class="return_home" onmouseover="this.style.transform='translateX(-3px)'"
+              onmouseout="this.style.transform='none'">
               🏠 返回喵星
             </button>
           </div>
@@ -239,7 +183,7 @@ window.addEventListener('click', (e) => {
   flex: 1;
   background: white;
   border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
 
@@ -269,7 +213,8 @@ h1 {
   height: 500px;
 }
 
-.editor, .preview {
+.editor,
+.preview {
   flex: 1;
   padding: 20px;
   overflow-y: auto;
@@ -316,7 +261,7 @@ button {
 
 button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
 }
 
 button i {
@@ -339,7 +284,7 @@ button i {
   padding: 20px;
   background: rgba(255, 255, 255, 0.8);
   border-radius: 20px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   backdrop-filter: blur(5px);
 }
 
@@ -384,15 +329,19 @@ footer {
   .main-wrapper {
     flex-direction: column;
   }
+
   .left-decoration {
     width: 100%;
     margin-bottom: 20px;
   }
+
   .editor-container {
     flex-direction: column;
     height: auto;
   }
-  .editor, .preview {
+
+  .editor,
+  .preview {
     height: 300px;
   }
 }

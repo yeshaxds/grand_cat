@@ -3,14 +3,8 @@
     <AppHeader />
 
     <div class="apps-grid">
-      <AppCard
-          v-for="app in apps"
-          :icon="app.icon"
-          :title="app.title"
-          :description="app.description"
-          :buttonText="app.buttonText"
-          :route="app.route"
-      />
+      <AppCard v-for="app in apps" :icon="app.icon" :title="app.title" :description="app.description"
+        :buttonText="app.buttonText" :route="app.route" />
     </div>
 
     <footer>
@@ -98,59 +92,11 @@ export default {
       ]
     }
   },
-  mounted() {
-    // 添加点击效果
-    const catEmojis = ['😺', '😸', '😹', '😻', '😼', '😽', '🙀', '🐱', '🐈', '🐈‍⬛'];
-
-    window.addEventListener('click', (e) => {
-      this.createCatEmojiEffect(e.clientX, e.clientY, catEmojis);
-
-      if (Math.random() > 0.5) {
-        this.createPawPrint(e.clientX, e.clientY);
-      }
-    });
-  },
-  methods: {
-    createCatEmojiEffect(x, y, emojis) {
-      const emoji = document.createElement('div');
-      emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-      emoji.style.position = 'fixed';
-      emoji.style.left = `${x}px`;
-      emoji.style.top = `${y}px`;
-      emoji.style.fontSize = '30px';
-      emoji.style.pointerEvents = 'none';
-      emoji.style.zIndex = '9999';
-      emoji.style.transform = 'translate(-50%, -50%)';
-      emoji.style.animation = 'emojiFloat 1.5s ease-out forwards';
-      document.body.appendChild(emoji);
-
-      setTimeout(() => emoji.remove(), 1500);
-    },
-    navigateTo(page) {
-      window.location.href = `${page}.html`;
-    },
-    createPawPrint(x, y) {
-      const paw = document.createElement('div');
-      paw.innerHTML = '🐾';
-      paw.style.position = 'fixed';
-      paw.style.left = `${x + (Math.random() * 40 - 20)}px`;
-      paw.style.top = `${y + (Math.random() * 40 - 20)}px`;
-      paw.style.fontSize = '24px';
-      paw.style.opacity = '0.7';
-      paw.style.animation = 'pawFade 2s forwards';
-      document.body.appendChild(paw);
-
-      setTimeout(() => paw.remove(), 2000);
-    }
-  }
 }
 </script>
 
 <style scoped>
-
 .container {
- 
-  margin: 0 auto;
   text-align: center;
 }
 
@@ -159,7 +105,7 @@ export default {
   grid-template-columns: [start] 1fr [middle] 1fr [middle2] 1fr [end];
   /* grid-template-rows: [top] 100px [center] auto [bottom]; */
   gap: 2rem;
-  padding: 1rem;
+  /* padding: 1rem; */
 
 }
 
@@ -169,16 +115,12 @@ footer {
   font-size: 0.9rem;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
 @keyframes emojiFloat {
   0% {
     transform: translate(-50%, -50%) scale(1);
     opacity: 1;
   }
+
   100% {
     transform: translate(-50%, -150%) scale(1.5);
     opacity: 0;
@@ -186,8 +128,13 @@ footer {
 }
 
 @keyframes pawFade {
-  0% { opacity: 0.7; }
-  100% { opacity: 0; }
+  0% {
+    opacity: 0.7;
+  }
+
+  100% {
+    opacity: 0;
+  }
 }
 
 @media (max-width: 768px) {
@@ -197,5 +144,4 @@ footer {
     padding: 1rem;
   }
 }
-
 </style>

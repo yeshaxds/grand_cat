@@ -14,12 +14,8 @@
       <button @click="addCat">添加猫咪</button>
       <button @click="changeBg">更换背景</button>
       <button @click="toggleAnimation">{{ isAnimating ? '暂停' : '开始' }}动画</button>
-      <button
-          @click="goToHome"
-          class="return_home"
-          @mouseover="hoverHomeButton(true)"
-          @mouseout="hoverHomeButton(false)"
-      >
+      <button @click="goToHome" class="return_home" @mouseover="hoverHomeButton(true)"
+        @mouseout="hoverHomeButton(false)">
         🏠 返回喵星
       </button>
     </div>
@@ -44,7 +40,7 @@ export default {
     // Three.js 相关变量
     let scene, renderer, camera, controls;
     const cats = ref([]);
-    const catEmojis = ['😺', '😸', '😹', '😻', '😼', '😽', '🙀', '🐱', '🐈', '🐈‍⬛'];
+
 
 
     const goToHome = () => {
@@ -140,45 +136,6 @@ export default {
       }
     };
 
-    // 创建猫咪表情效果
-    const createCatEmojiEffect = (x, y) => {
-      const emoji = document.createElement('div');
-      emoji.textContent = catEmojis[Math.floor(Math.random() * catEmojis.length)];
-      emoji.style.position = 'fixed';
-      emoji.style.left = `${x}px`;
-      emoji.style.top = `${y}px`;
-      emoji.style.fontSize = '30px';
-      emoji.style.pointerEvents = 'none';
-      emoji.style.zIndex = '9999';
-      emoji.style.transform = 'translate(-50%, -50%)';
-      emoji.style.animation = 'emojiFloat 1.5s ease-out forwards';
-
-      document.body.appendChild(emoji);
-      setTimeout(() => emoji.remove(), 1500);
-    };
-
-    // 创建爪印效果
-    const createPawEffect = (x, y) => {
-      const paw = document.createElement('div');
-      paw.innerHTML = '🐾';
-      paw.style.position = 'fixed';
-      paw.style.left = `${x + (Math.random() * 40 - 20)}px`;
-      paw.style.top = `${y + (Math.random() * 40 - 20)}px`;
-      paw.style.fontSize = '24px';
-      paw.style.opacity = '0.7';
-      paw.style.animation = 'pawFade 2s forwards';
-      document.body.appendChild(paw);
-
-      setTimeout(() => paw.remove(), 2000);
-    };
-
-    // 点击事件处理
-    const handleClick = (e) => {
-      createCatEmojiEffect(e.clientX, e.clientY);
-      if (Math.random() > 0.5) {
-        createPawEffect(e.clientX, e.clientY);
-      }
-    };
 
     onMounted(() => {
       initScene();
@@ -188,12 +145,10 @@ export default {
       }
       animate();
       window.addEventListener('resize', onWindowResize);
-      window.addEventListener('click', handleClick);
     });
 
     onUnmounted(() => {
       window.removeEventListener('resize', onWindowResize);
-      window.removeEventListener('click', handleClick);
       // 清理Three.js资源
       if (renderer) {
         renderer.dispose();
@@ -215,7 +170,6 @@ export default {
 </script>
 
 <style scoped>
-
 .cat-park-container {
   color: #333;
 }
@@ -241,7 +195,7 @@ export default {
 h1 {
   font-size: 3rem;
   color: var(--primary);
-  text-shadow: 3px 3px 0 rgba(0,0,0,0.1);
+  text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
   margin-bottom: 10px;
 }
 
@@ -265,12 +219,12 @@ button {
   font-size: 1.2rem;
   cursor: pointer;
   transition: all 0.3s;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 button:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(255,154,118,0.3);
+  box-shadow: 0 8px 20px rgba(255, 154, 118, 0.3);
 }
 
 .cat-counter {
@@ -281,8 +235,9 @@ button:hover {
   padding: 10px 20px;
   border-radius: 50px;
   font-size: 1.2rem;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
+
 .return_home {
   background-color: #a2d5f2;
   color: #07689f;
@@ -294,10 +249,12 @@ button:hover {
   transition: all 0.3s;
   display: inline-block;
 }
+
 @media (max-width: 768px) {
   h1 {
     font-size: 2rem;
   }
+
   .controls {
     flex-direction: column;
     width: 80%;
@@ -312,6 +269,7 @@ button:hover {
     transform: translate(-50%, -50%) scale(1);
     opacity: 1;
   }
+
   100% {
     transform: translate(-50%, -150%) scale(1.5);
     opacity: 0;
@@ -322,6 +280,7 @@ button:hover {
   0% {
     opacity: 0.7;
   }
+
   100% {
     opacity: 0;
   }

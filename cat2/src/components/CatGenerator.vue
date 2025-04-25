@@ -3,9 +3,10 @@
     <h1>🐱 随机猫猫生成器 🐾</h1>
 
     <div class="cat-container">
-      <div v-if="loading" class="loading">加载中...请稍候</div>
-      <img v-else :src="catImage" :alt="'随机猫猫图片 ' + catId" class="cat-image">
-
+      <div class="cat-image-container">
+        <div v-if="loading" class="loading">加载中...请稍候</div>
+        <img v-else :src="catImage" :alt="'随机猫猫图片 ' + catId" class="cat-image">
+      </div>
       <div class="controls">
         <button @click="fetchRandomCat">再来一只猫猫</button>
         <button @click="translateToMeow" :disabled="translating">
@@ -14,13 +15,7 @@
         <button @click="addTag" v-if="!currentTag">添加标签</button>
       </div>
 
-      <input
-          v-if="currentTag"
-          v-model="newTag"
-          @keyup.enter="saveTag"
-          placeholder="输入标签..."
-          class="tag-input"
-      >
+      <input v-if="currentTag" v-model="newTag" @keyup.enter="saveTag" placeholder="输入标签..." class="tag-input">
 
       <div v-if="tags.length > 0" class="tags-container">
         <span class="tag" v-for="(tag, index) in tags" :key="index">
@@ -49,6 +44,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'CatGenerator',
   data() {
@@ -127,51 +123,8 @@ export default {
     },
     removeTag(index) {
       this.tags.splice(index, 1);
-    },
-    createCatEmojiEffect(x, y) {
-      const catEmojis = ['😺', '😸', '😹', '😻', '😼', '😽', '🙀', '🐱', '🐈', '🐈‍⬛'];
-      const emoji = document.createElement('div');
-      emoji.textContent = catEmojis[Math.floor(Math.random() * catEmojis.length)];
-      emoji.style.position = 'fixed';
-      emoji.style.left = `${x}px`;
-      emoji.style.top = `${y}px`;
-      emoji.style.fontSize = '30px';
-      emoji.style.pointerEvents = 'none';
-      emoji.style.zIndex = '9999';
-      emoji.style.transform = 'translate(-50%, -50%)';
-      emoji.style.animation = 'emojiFloat 1.5s ease-out forwards';
-
-      document.body.appendChild(emoji);
-
-      setTimeout(() => {
-        emoji.remove();
-      }, 1500);
-    },
-    createPawPrint(x, y) {
-      const paw = document.createElement('div');
-      paw.innerHTML = '🐾';
-      paw.style.position = 'fixed';
-      paw.style.left = `${x + (Math.random() * 40 - 20)}px`;
-      paw.style.top = `${y + (Math.random() * 40 - 20)}px`;
-      paw.style.fontSize = '24px';
-      paw.style.opacity = '0.7';
-      paw.style.animation = 'pawFade 2s forwards';
-      document.body.appendChild(paw);
-
-      setTimeout(() => paw.remove(), 2000);
     }
   },
-  mounted() {
-    this.fetchRandomCat();
-
-    window.addEventListener('click', (e) => {
-      this.createCatEmojiEffect(e.clientX, e.clientY);
-
-      if (Math.random() > 0.5) {
-        this.createPawPrint(e.clientX, e.clientY);
-      }
-    });
-  }
 }
 </script>
 
@@ -180,6 +133,7 @@ export default {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
+  min-height: 100vh;
 }
 
 h1 {
@@ -191,17 +145,38 @@ h1 {
   background-color: white;
   border-radius: 15px;
   padding: 20px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   margin: 20px 0;
   text-align: center;
+  min-height: 450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cat-image-container {
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.loading {
+  font-style: italic;
+  color: #888;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2em;
 }
 
 .cat-image {
   max-width: 100%;
   max-height: 400px;
   border-radius: 10px;
-  margin: 10px 0;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
 }
 
 button {
@@ -227,11 +202,6 @@ button:hover {
   padding: 15px;
   margin: 20px 0;
   border-radius: 0 10px 10px 0;
-}
-
-.loading {
-  font-style: italic;
-  color: #888;
 }
 
 .cat-fact {

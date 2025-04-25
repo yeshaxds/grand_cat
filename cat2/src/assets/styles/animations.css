@@ -1,0 +1,32 @@
+/* 点击特效的动画样式 */
+
+/* 猫咪emoji浮动动画 */
+@keyframes emojiFloat {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  70% {
+    opacity: 0.7;
+    transform: translate(-50%, -80px) scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -100px) scale(1.5);
+  }
+}
+
+/* 猫爪印淡出动画 */
+@keyframes pawFade {
+  0% {
+    opacity: 0.7;
+    transform: scale(0.8);
+  }
+  70% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}

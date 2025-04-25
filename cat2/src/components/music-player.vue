@@ -8,7 +8,7 @@
       </header>
 
       <div class="player-container">
-        <div class="album-art" :class="{default: !currentSong.cover, playing: isPlaying}">
+        <div class="album-art" :class="{ default: !currentSong.cover, playing: isPlaying }">
           <img v-if="currentSong.cover" :src="currentSong.cover" alt="Album Art">
           <div class="cat-icon">🎵</div>
         </div>
@@ -20,7 +20,7 @@
 
         <div class="progress-container">
           <div class="progress-bar" @click="seekAudio">
-            <div class="progress" :style="{width: progress + '%'}"></div>
+            <div class="progress" :style="{ width: progress + '%' }"></div>
           </div>
           <div class="time-info">
             <span>{{ currentTime }}</span>
@@ -30,13 +30,13 @@
 
         <div class="controls">
           <button class="control-btn" @click="prevSong">⏮</button>
-          <button class="control-btn" @click="toggleShuffle" :style="{color: shuffle ? 'var(--primary)' : ''}">
+          <button class="control-btn" @click="toggleShuffle" :style="{ color: shuffle ? 'var(--primary)' : '' }">
             🔀
           </button>
           <button class="play-btn" @click="togglePlay">
             {{ isPlaying ? '⏸' : '▶' }}
           </button>
-          <button class="control-btn" @click="toggleRepeat" :style="{color: repeat ? 'var(--primary)' : ''}">
+          <button class="control-btn" @click="toggleRepeat" :style="{ color: repeat ? 'var(--primary)' : '' }">
             🔁
           </button>
           <button class="control-btn" @click="nextSong">⏭</button>
@@ -44,11 +44,8 @@
 
         <div class="playlist">
           <h2>🐾 猫咪歌单 🐾</h2>
-          <div class="song-item"
-               v-for="(song, index) in playlist"
-               :key="index"
-               :class="{active: currentSongIndex === index}"
-               @click="playSong(index)">
+          <div class="song-item" v-for="(song, index) in playlist" :key="index"
+            :class="{ active: currentSongIndex === index }" @click="playSong(index)">
             <img :src="song.cover || 'https://placekitten.com/50/50'" alt="Cover">
             <div class="song-item-info">
               <div class="song-item-title">{{ song.title }}</div>
@@ -134,16 +131,10 @@ const currentSong = ref({})
 
 // 初始化播放器
 onMounted(() => {
-  currentSong.value = {...playlist.value[0]}
+  currentSong.value = { ...playlist.value[0] }
   audioPlayer.value.src = currentSong.value.audio
   audioPlayer.value.addEventListener('loadedmetadata', () => {
     duration.value = formatTime(audioPlayer.value.duration)
-  })
-
-  // 点击效果
-  window.addEventListener('click', (e) => {
-    createCatEmojiEffect(e.clientX, e.clientY)
-    if (Math.random() > 0.5) createPawPrint(e.clientX, e.clientY)
   })
 })
 
@@ -162,318 +153,290 @@ const goToHome = () => {
   router.push('/')
 }
 
-const catEmojis = ['😺', '😸', '😹', '😻', '😼', '😽', '🙀', '🐱', '🐈', '🐈‍⬛']
-
-const createCatEmojiEffect = (x, y) => {
-  const emoji = document.createElement('div')
-  emoji.textContent = catEmojis[Math.floor(Math.random() * catEmojis.length)]
-  emoji.style.position = 'fixed'
-  emoji.style.left = `${x}px`
-  emoji.style.top = `${y}px`
-  emoji.style.fontSize = '30px'
-  emoji.style.pointerEvents = 'none'
-  emoji.style.zIndex = '9999'
-  emoji.style.transform = 'translate(-50%, -50%)'
-  emoji.style.animation = 'emojiFloat 1.5s ease-out forwards'
-  document.body.appendChild(emoji)
-  setTimeout(() => emoji.remove(), 1500)
-}
-
-const createPawPrint = (x, y) => {
-  const paw = document.createElement('div')
-  paw.innerHTML = '🐾'
-  paw.style.position = 'fixed'
-  paw.style.left = `${x + (Math.random() * 40 - 20)}px`
-  paw.style.top = `${y + (Math.random() * 40 - 20)}px`
-  paw.style.fontSize = '24px'
-  paw.style.opacity = '0.7'
-  paw.style.animation = 'pawFade 2s forwards'
-  document.body.appendChild(paw)
-  setTimeout(() => paw.remove(), 2000)
-}
 </script>
 
 <style scoped>
-  .music-player {
-    --primary: #ff9a76;
-    --secondary: #a2d5f2;
-    --dark: #07689f;
-    --light: #fafafa;
+.music-player {
+  --primary: #ff9a76;
+  --secondary: #a2d5f2;
+  --dark: #07689f;
+  --light: #fafafa;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  font-family: 'Ma Shan Zheng', cursive;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+header {
+  background-color: var(--primary);
+  color: white;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.cat-ears {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 3rem;
+}
+
+.player-container {
+  padding: 20px;
+}
+
+.album-art {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  border: 5px solid white;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.album-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.album-art .cat-icon {
+  font-size: 5rem;
+  color: var(--dark);
+  display: none;
+}
+
+.album-art.default .cat-icon {
+  display: block;
+}
+
+.song-info {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.song-title {
+  font-size: 1.8rem;
+  margin-bottom: 5px;
+  color: var(--dark);
+}
+
+.artist {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.progress-container {
+  margin: 25px 0;
+}
+
+.progress-bar {
+  height: 6px;
+  background-color: #e0e0e0;
+  border-radius: 3px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.progress {
+  height: 100%;
+  background-color: var(--primary);
+  border-radius: 3px;
+  width: 0%;
+  transition: width 0.1s linear;
+}
+
+.time-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.control-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  margin: 0 15px;
+  cursor: pointer;
+  color: var(--dark);
+  transition: all 0.3s;
+}
+
+.control-btn:hover {
+  color: var(--primary);
+  transform: scale(1.1);
+}
+
+.play-btn {
+  background-color: var(--primary);
+  color: white;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  box-shadow: 0 5px 15px rgba(255, 154, 118, 0.4);
+}
+
+.play-btn:hover {
+  transform: scale(1.05);
+}
+
+.playlist {
+  margin-top: 30px;
+  border-top: 1px solid #eee;
+  padding-top: 20px;
+}
+
+.playlist h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--dark);
+  font-size: 1.5rem;
+}
+
+.song-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.song-item:hover {
+  background-color: rgba(162, 213, 242, 0.2);
+}
+
+.song-item.active {
+  background-color: rgba(255, 154, 118, 0.2);
+}
+
+.song-item img {
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+  margin-right: 15px;
+  object-fit: cover;
+}
+
+.song-item-info {
+  flex-grow: 1;
+}
+
+.song-item-title {
+  font-weight: bold;
+  margin-bottom: 3px;
+}
+
+.song-item-artist {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.song-item-duration {
+  font-size: 0.9rem;
+  color: #999;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.cat-paw {
+  position: fixed;
+  opacity: 0.05;
+  z-index: -1;
+  font-size: 10rem;
+}
+
+.paw-1 {
+  bottom: 10%;
+  left: 10%;
+  transform: rotate(-20deg);
+}
+
+.paw-2 {
+  top: 15%;
+  right: 10%;
+  transform: rotate(25deg);
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
   }
 
-  .container {
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: white;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    overflow: hidden;
-    font-family: 'Ma Shan Zheng', cursive;
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.playing .album-art {
+  animation: spin 20s linear infinite;
+}
+
+.return_home {
+  background-color: #a2d5f2;
+  color: #07689f;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: inline-block;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
   }
 
-  .container {
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: white;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    overflow: hidden;
+  to {
+    transform: rotate(360deg);
   }
-
-  header {
-    background-color: var(--primary);
-    color: white;
-    padding: 20px;
-    text-align: center;
-    position: relative;
-  }
-
-  h1 {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-  }
-
-  .cat-ears {
-    position: absolute;
-    top: -15px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 3rem;
-  }
-
-  .player-container {
-    padding: 20px;
-  }
-
-  .album-art {
-    width: 200px;
-    height: 200px;
-    margin: 0 auto 20px;
-    border-radius: 50%;
-    overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    position: relative;
-    border: 5px solid white;
-    background-color: #f0f0f0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .album-art img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .album-art .cat-icon {
-    font-size: 5rem;
-    color: var(--dark);
-    display: none;
-  }
-
-  .album-art.default .cat-icon {
-    display: block;
-  }
-
-  .song-info {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
-  .song-title {
-    font-size: 1.8rem;
-    margin-bottom: 5px;
-    color: var(--dark);
-  }
-
-  .artist {
-    font-size: 1.2rem;
-    color: #666;
-  }
-
-  .progress-container {
-    margin: 25px 0;
-  }
-
-  .progress-bar {
-    height: 6px;
-    background-color: #e0e0e0;
-    border-radius: 3px;
-    margin-bottom: 5px;
-    cursor: pointer;
-  }
-
-  .progress {
-    height: 100%;
-    background-color: var(--primary);
-    border-radius: 3px;
-    width: 0%;
-    transition: width 0.1s linear;
-  }
-
-  .time-info {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.9rem;
-    color: #666;
-  }
-
-  .controls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20px 0;
-  }
-
-  .control-btn {
-    background: none;
-    border: none;
-    font-size: 2rem;
-    margin: 0 15px;
-    cursor: pointer;
-    color: var(--dark);
-    transition: all 0.3s;
-  }
-
-  .control-btn:hover {
-    color: var(--primary);
-    transform: scale(1.1);
-  }
-
-  .play-btn {
-    background-color: var(--primary);
-    color: white;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.8rem;
-    box-shadow: 0 5px 15px rgba(255, 154, 118, 0.4);
-  }
-
-  .play-btn:hover {
-    transform: scale(1.05);
-  }
-
-  .playlist {
-    margin-top: 30px;
-    border-top: 1px solid #eee;
-    padding-top: 20px;
-  }
-
-  .playlist h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: var(--dark);
-    font-size: 1.5rem;
-  }
-
-  .song-item {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    cursor: pointer;
-    transition: all 0.3s;
-  }
-
-  .song-item:hover {
-    background-color: rgba(162, 213, 242, 0.2);
-  }
-
-  .song-item.active {
-    background-color: rgba(255, 154, 118, 0.2);
-  }
-
-  .song-item img {
-    width: 50px;
-    height: 50px;
-    border-radius: 5px;
-    margin-right: 15px;
-    object-fit: cover;
-  }
-
-  .song-item-info {
-    flex-grow: 1;
-  }
-
-  .song-item-title {
-    font-weight: bold;
-    margin-bottom: 3px;
-  }
-
-  .song-item-artist {
-    font-size: 0.9rem;
-    color: #666;
-  }
-
-  .song-item-duration {
-    font-size: 0.9rem;
-    color: #999;
-  }
-
-  footer {
-    text-align: center;
-    padding: 20px;
-    color: #666;
-    font-size: 0.9rem;
-  }
-
-  .cat-paw {
-    position: fixed;
-    opacity: 0.05;
-    z-index: -1;
-    font-size: 10rem;
-  }
-
-  .paw-1 {
-    bottom: 10%;
-    left: 10%;
-    transform: rotate(-20deg);
-  }
-
-  .paw-2 {
-    top: 15%;
-    right: 10%;
-    transform: rotate(25deg);
-  }
-
-  @keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-
-  .playing .album-art {
-    animation: spin 20s linear infinite;
-  }
-
-  .return_home {
-    background-color: #a2d5f2;
-    color: #07689f;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: all 0.3s;
-    display: inline-block;
-  }
-  @keyframes emojiFloat {
-    0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-    100% { transform: translate(-50%, -150%) scale(1.5); opacity: 0; }
-  }
-
-  @keyframes pawFade {
-    0% { opacity: 0.7; }
-    100% { opacity: 0; }
-  }
-
-  @keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
+}
 </style>

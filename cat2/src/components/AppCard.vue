@@ -35,16 +35,18 @@ const handleClick = () => {
   background: white;
   border-radius: 20px;
   padding: 2rem;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  /* 控制浮动 */
   transition: all 0.3s ease;
   cursor: pointer;
   position: relative;
   overflow: hidden;
+  animation: fadeIn 3s cubic-bezier(0.88, -0.04, 0.12, 0.98);
 }
 
 .app-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
 
 .app-card::before {
@@ -64,15 +66,19 @@ const handleClick = () => {
 .app-card:nth-child(3)::before {
   background: #a8df65;
 }
+
 .app-card:nth-child(4)::before {
   background: #a80f61;
 }
+
 .app-card:nth-child(5)::before {
   background: #ffd166;
 }
+
 .app-card:nth-child(6)::before {
   background: #2f31cc;
 }
+
 .app-card:nth-child(7)::before {
   background: #e36c48;
 }
@@ -80,7 +86,6 @@ const handleClick = () => {
 .app-icon {
   font-size: 3.5rem;
   margin-bottom: 1.5rem;
-  color: var(--dark);
 }
 
 .app-title {
@@ -111,5 +116,17 @@ const handleClick = () => {
 .btn:hover {
   background: var(--dark);
   transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>

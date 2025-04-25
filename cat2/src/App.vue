@@ -3,14 +3,24 @@
 </template>
 
 <script>
+import { setupClickEffects, removeClickEffects } from '@/utils/clickEffectsmb';
 export default {
-  name: 'App'
+  name: 'App',
+
+  mounted() {
+    setupClickEffects();
+  },
+
+  beforeUnmount() {
+    removeClickEffects();
+  }
 }
 </script>
 
 <style>
 /* 全局样式可以放在这里或单独的CSS文件 */
 @import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Poppins:wght@400;600&display=swap');
+@import url('@/assets/styles/animations.css');
 
 :root {
   --primary: #ff7e67;
@@ -33,6 +43,7 @@ body {
     transform: translate(-50%, -50%) scale(1);
     opacity: 1;
   }
+
   100% {
     transform: translate(-50%, -150%) scale(1.5);
     opacity: 0;
@@ -40,7 +51,12 @@ body {
 }
 
 @keyframes pawFade {
-  0% { opacity: 0.7; }
-  100% { opacity: 0; }
+  0% {
+    opacity: 0.7;
+  }
+
+  100% {
+    opacity: 0;
+  }
 }
 </style>

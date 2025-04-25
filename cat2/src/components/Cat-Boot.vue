@@ -109,68 +109,12 @@ const deleteCat = async (id) => {
   }
 };
 
-const catEmojis = ['😺', '😸', '😹', '😻', '😼', '😽', '🙀', '🐱', '🐈', '🐈‍⬛'];
-
-const createCatEmojiEffect = (x, y) => {
-  const emoji = document.createElement('div');
-  emoji.textContent = catEmojis[Math.floor(Math.random() * catEmojis.length)];
-  emoji.style.position = 'fixed';
-  emoji.style.left = `${x}px`;
-  emoji.style.top = `${y}px`;
-  emoji.style.fontSize = '30px';
-  emoji.style.pointerEvents = 'none';
-  emoji.style.zIndex = '9999';
-  emoji.style.transform = 'translate(-50%, -50%)';
-  emoji.style.animation = 'emojiFloat 1.5s ease-out forwards';
-
-  document.body.appendChild(emoji);
-
-  setTimeout(() => {
-    emoji.remove();
-  }, 1500);
-};
-
-// 添加CSS动画
-const style = document.createElement('style');
-style.textContent = `
-            @keyframes emojiFloat {
-                0% {
-                    transform: translate(-50%, -50%) scale(1);
-                    opacity: 1;
-                }
-                100% {
-                    transform: translate(-50%, -150%) scale(1.5);
-                    opacity: 0;
-                }
-            }
-        `;
-document.head.appendChild(style);
-
-// 绑定点击事件
-window.addEventListener('click', (e) => {
-  createCatEmojiEffect(e.clientX, e.clientY);
-
-  // 50%概率显示爪印
-  if (Math.random() > 0.5) {
-    const paw = document.createElement('div');
-    paw.innerHTML = '🐾';
-    paw.style.position = 'fixed';
-    paw.style.left = `${e.clientX + (Math.random() * 40 - 20)}px`;
-    paw.style.top = `${e.clientY + (Math.random() * 40 - 20)}px`;
-    paw.style.fontSize = '24px';
-    paw.style.opacity = '0.7';
-    paw.style.animation = 'pawFade 2s forwards';
-    document.body.appendChild(paw);
-
-    setTimeout(() => paw.remove(), 2000);
-  }
-});
 // 初始化加载数据
 fetchCats();
 </script>
 
 <template>
-  <div class = "CatBoot">
+  <div class="CatBoot">
     <div class="container">
       <header>
         <div class="cat-icon">🐱</div>
@@ -190,31 +134,31 @@ fetchCats();
 
       <table class="cat-table" v-else>
         <thead>
-        <tr>
-          <th>ID</th>
-          <th>头像</th>
-          <th>名字</th>
-          <th>外貌</th>
-          <th>年龄</th>
-          <th>操作</th>
-        </tr>
+          <tr>
+            <th>ID</th>
+            <th>头像</th>
+            <th>名字</th>
+            <th>外貌</th>
+            <th>年龄</th>
+            <th>操作</th>
+          </tr>
         </thead>
         <tbody>
-        <tr v-for="cat in cats" :key="cat.id">
-          <td>{{ cat.id }}</td>
-          <td>
-            <div class="cat-avatar">
-              {{ getCatEmoji(cat.appearance) }}
-            </div>
-          </td>
-          <td>{{ cat.name }}</td>
-          <td>{{ cat.appearance }}</td>
-          <td>{{ cat.age }}岁</td>
-          <td>
-            <button class="action-btn edit-btn" @click="showEditModal(cat)">编辑</button>
-            <button class="action-btn delete-btn" @click="deleteCat(cat.id)">删除</button>
-          </td>
-        </tr>
+          <tr v-for="cat in cats" :key="cat.id">
+            <td>{{ cat.id }}</td>
+            <td>
+              <div class="cat-avatar">
+                {{ getCatEmoji(cat.appearance) }}
+              </div>
+            </td>
+            <td>{{ cat.name }}</td>
+            <td>{{ cat.appearance }}</td>
+            <td>{{ cat.age }}岁</td>
+            <td>
+              <button class="action-btn edit-btn" @click="showEditModal(cat)">编辑</button>
+              <button class="action-btn delete-btn" @click="deleteCat(cat.id)">删除</button>
+            </td>
+          </tr>
         </tbody>
       </table>
 
@@ -254,12 +198,8 @@ fetchCats();
         </div>
       </div>
       <div style="text-align: center;">
-        <button
-            @click="goToHome"
-            class="return_home"
-            onmouseover="this.style.transform='translateX(-3px)'"
-            onmouseout="this.style.transform='none'"
-        >
+        <button @click="goToHome" class="return_home" onmouseover="this.style.transform='translateX(-3px)'"
+          onmouseout="this.style.transform='none'">
           🏠 返回喵星
         </button>
       </div>
@@ -276,7 +216,7 @@ fetchCats();
   margin: 0 auto;
   background: white;
   border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   color: #333;
 }
@@ -346,7 +286,7 @@ button {
 
 button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
 }
 
 .cat-table {
@@ -354,7 +294,8 @@ button:hover {
   border-collapse: collapse;
 }
 
-.cat-table th, .cat-table td {
+.cat-table th,
+.cat-table td {
   padding: 12px 15px;
   text-align: left;
   border-bottom: 1px solid #eee;
@@ -403,7 +344,7 @@ button:hover {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -424,7 +365,7 @@ button:hover {
   border-radius: 15px;
   width: 90%;
   max-width: 500px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .modal-footer {
@@ -443,7 +384,8 @@ button:hover {
   font-weight: 600;
 }
 
-.form-group input, .form-group select {
+.form-group input,
+.form-group select {
   width: 100%;
   padding: 8px 10px;
   border: 1px solid #ddd;

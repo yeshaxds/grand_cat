@@ -11,13 +11,8 @@
       <div class="quiz-question">{{ currentQuestion.text }}</div>
 
       <div class="quiz-options">
-        <button
-            v-for="(option, index) in currentQuestion.options"
-            :key="index"
-            class="option-btn"
-            @click="selectAnswer(index)"
-            :class="{ 'selected': selectedAnswer === index }"
-        >
+        <button v-for="(option, index) in currentQuestion.options" :key="index" class="option-btn"
+          @click="selectAnswer(index)" :class="{ 'selected': selectedAnswer === index }">
           {{ option }}
         </button>
       </div>
@@ -35,12 +30,7 @@
       </div>
 
       <div class="photo-grid">
-        <div
-            class="photo-card"
-            v-for="(photo, index) in photos"
-            :key="index"
-            @click="showPhoto(index)"
-        >
+        <div class="photo-card" v-for="(photo, index) in photos" :key="index" @click="showPhoto(index)">
           <img :src="photo.url" :alt="photo.title" class="photo-img">
           <div class="photo-caption">
             <h3>{{ photo.title }}</h3>
@@ -52,26 +42,15 @@
       <div class="upload-section">
         <h3>上传你的猫咪照片</h3>
         <p>与大家分享你家主子的可爱瞬间</p>
-        <input
-            type="file"
-            id="photo-upload"
-            accept="image/*"
-            style="display: none;"
-            @change="handleUpload"
-            multiple
-        >
+        <input type="file" id="photo-upload" accept="image/*" style="display: none;" @change="handleUpload" multiple>
         <button class="upload-btn" @click="triggerUpload">
           <span class="upload-icon">📷</span> 选择照片
         </button>
       </div>
 
       <div style="text-align: center;">
-        <button
-            @click="goToHome"
-            class="return-home"
-            @mouseover="hoverHomeButton(true)"
-            @mouseout="hoverHomeButton(false)"
-        >
+        <button @click="goToHome" class="return-home" @mouseover="hoverHomeButton(true)"
+          @mouseout="hoverHomeButton(false)">
           🏠 返回主页
         </button>
       </div>
@@ -113,7 +92,7 @@ const questions = [
 
 // 随机选择一个问题
 const currentQuestion = ref(
-    questions[Math.floor(Math.random() * questions.length)]
+  questions[Math.floor(Math.random() * questions.length)]
 )
 
 // 猫咪照片库
@@ -268,44 +247,6 @@ const hoverHomeButton = (isHovering) => {
   }
 }
 
-// 初始化点击效果
-onMounted(() => {
-  window.addEventListener('click', (e) => {
-    createCatEmojiEffect(e.clientX, e.clientY)
-    if (Math.random() > 0.5) createPawPrint(e.clientX, e.clientY)
-  })
-})
-
-// 创建猫猫表情效果
-const createCatEmojiEffect = (x, y) => {
-  const catEmojis = ['😺', '😸', '😹', '😻', '😼', '😽', '🙀', '🐱', '🐈', '🐈‍⬛']
-  const emoji = document.createElement('div')
-  emoji.textContent = catEmojis[Math.floor(Math.random() * catEmojis.length)]
-  emoji.style.position = 'fixed'
-  emoji.style.left = `${x}px`
-  emoji.style.top = `${y}px`
-  emoji.style.fontSize = '30px'
-  emoji.style.pointerEvents = 'none'
-  emoji.style.zIndex = '9999'
-  emoji.style.transform = 'translate(-50%, -50%)'
-  emoji.style.animation = 'emojiFloat 1.5s ease-out forwards'
-  document.body.appendChild(emoji)
-  setTimeout(() => emoji.remove(), 1500)
-}
-
-// 创建猫爪印效果
-const createPawPrint = (x, y) => {
-  const paw = document.createElement('div')
-  paw.innerHTML = '🐾'
-  paw.style.position = 'fixed'
-  paw.style.left = `${x + (Math.random() * 40 - 20)}px`
-  paw.style.top = `${y + (Math.random() * 40 - 20)}px`
-  paw.style.fontSize = '24px'
-  paw.style.opacity = '0.7'
-  paw.style.animation = 'pawFade 2s forwards'
-  document.body.appendChild(paw)
-  setTimeout(() => paw.remove(), 2000)
-}
 </script>
 
 <style scoped>
@@ -314,7 +255,7 @@ const createPawPrint = (x, y) => {
   --secondary: #a2d5f2;
   --dark: #07689f;
   --light: #fafafa;
-  color:#222
+  color: #222
 }
 
 /* 答题界面样式 */
@@ -523,6 +464,7 @@ h1 {
     transform: translate(-50%, -50%) scale(1);
     opacity: 1;
   }
+
   100% {
     transform: translate(-50%, -150%) scale(1.5);
     opacity: 0;
@@ -533,6 +475,7 @@ h1 {
   0% {
     opacity: 0.7;
   }
+
   100% {
     opacity: 0;
   }
@@ -543,12 +486,15 @@ h1 {
     transform: translateY(0) rotate(0deg);
     opacity: 0;
   }
+
   10% {
     opacity: 0.7;
   }
+
   90% {
     opacity: 0.7;
   }
+
   100% {
     transform: translateY(-100vh) rotate(360deg);
     opacity: 0;
@@ -560,6 +506,7 @@ h1 {
     transform: translateY(0) rotate(0deg);
     opacity: 1;
   }
+
   100% {
     transform: translateY(100vh) rotate(720deg);
     opacity: 0;

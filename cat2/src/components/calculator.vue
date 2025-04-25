@@ -65,7 +65,7 @@ const compute = () => {
   previousOperand.value = '';
 
   history.value.unshift(
-      `${prev} ${currrent} ${current} = ${computation}`
+    `${prev} ${currrent} ${current} = ${computation}`
   );
   if (history.value.length > 10) history.value.pop();
 };
@@ -95,58 +95,6 @@ const changeCatFact = () => {
   currentCatFact.value = (currentCatFact.value + 1) % catFacts.length;
 };
 
-const catEmojis = ['😺', '😸', '😹', '😻', '😼', '😽', '🙀', '🐱', '🐈', '🐈‍⬛']
-
-const createCatEmojiEffect = (x, y) => {
-  const emoji = document.createElement('div')
-  emoji.textContent = catEmojis[Math.floor(Math.random() * catEmojis.length)]
-  emoji.style.position = 'fixed'
-  emoji.style.left = `${x}px`
-  emoji.style.top = `${y}px`
-  emoji.style.fontSize = '30px'
-  emoji.style.pointerEvents = 'none'
-  emoji.style.zIndex = '9999'
-  emoji.style.transform = 'translate(-50%, -50%)'
-  emoji.style.animation = 'emojiFloat 1.5s ease-out forwards'
-  document.body.appendChild(emoji)
-  setTimeout(() => emoji.remove(), 1500)
-}
-
-// 添加CSS动画
-const style = document.createElement('style');
-style.textContent = `
-            @keyframes emojiFloat {
-                0% {
-                    transform: translate(-50%, -50%) scale(1);
-                    opacity: 1;
-                }
-                100% {
-                    transform: translate(-50%, -150%) scale(1.5);
-                    opacity: 0;
-                }
-            }
-        `;
-document.head.appendChild(style);
-
-// 绑定点击事件
-window.addEventListener('click', (e) => {
-  createCatEmojiEffect(e.clientX, e.clientY);
-
-  // 50%概率显示爪印
-  if (Math.random() > 0.5) {
-    const paw = document.createElement('div');
-    paw.innerHTML = '🐾';
-    paw.style.position = 'fixed';
-    paw.style.left = `${e.clientX + (Math.random() * 40 - 20)}px`;
-    paw.style.top = `${e.clientY + (Math.random() * 40 - 20)}px`;
-    paw.style.fontSize = '24px';
-    paw.style.opacity = '0.7';
-    paw.style.animation = 'pawFade 2s forwards';
-    document.body.appendChild(paw);
-
-    setTimeout(() => paw.remove(), 2000);
-  }
-});
 </script>
 
 <template>
@@ -201,12 +149,8 @@ window.addEventListener('click', (e) => {
             <button @click="compute" class="equals span-2">=</button>
           </div>
           <div style="text-align: center; margin-bottom: -15px;">
-            <button
-                @click="goToHome"
-                class="home-btn"
-                onmouseover="this.style.transform='translateX(-3px)'"
-                onmouseout="this.style.transform='none'"
-            >
+            <button @click="goToHome" class="home-btn" onmouseover="this.style.transform='translateX(-3px)'"
+              onmouseout="this.style.transform='none'">
               🏠 返回喵星
             </button>
           </div>
@@ -235,7 +179,7 @@ window.addEventListener('click', (e) => {
   width: 100%;
   background: white;
   border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   color: #554f4f;
 }
@@ -318,7 +262,7 @@ button {
 
 button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
 }
 
 .span-2 {
@@ -340,7 +284,8 @@ button:hover {
   color: white;
 }
 
-.clear, .delete {
+.clear,
+.delete {
   background-color: #ff6b6b;
   color: white;
 }
@@ -351,6 +296,7 @@ footer {
   color: #666;
   font-size: 0.8rem;
 }
+
 .cat-btn {
   margin-top: 10px;
   background: rgba(219, 236, 228, 0.71);
@@ -360,9 +306,10 @@ footer {
   font-family: 'Ma Shan Zheng', cursive;
   border: 1px solid rgba(189, 177, 104, 0.5);
 }
+
 .home-btn {
   margin-top: 10px;
-  background: rgba(255,255,255,0.3);
+  background: rgba(255, 255, 255, 0.3);
   border: none;
   padding: 8px 15px;
   color: #65e03e;
@@ -388,7 +335,8 @@ footer {
   gap: 30px;
 }
 
-.left-decoration, .right-decoration {
+.left-decoration,
+.right-decoration {
   width: 200px;
   display: flex;
   flex-direction: column;
@@ -404,7 +352,7 @@ footer {
 }
 
 .cat-fact {
-  background: rgba(255,255,255,0.7);
+  background: rgba(255, 255, 255, 0.7);
   padding: 15px;
   border-radius: 15px;
   border: 1px dashed var(--primary);
@@ -418,17 +366,17 @@ footer {
 .yarn-ball {
   width: 80px;
   height: 80px;
-  background: conic-gradient(
-      #ff9a76, #a2d5f2, #ff6b6b, #07689f,
-      #ff9a76, #a2d5f2, #ff6b6b, #07689f
-  );
+  background: conic-gradient(#ff9a76, #a2d5f2, #ff6b6b, #07689f,
+      #ff9a76, #a2d5f2, #ff6b6b, #07689f);
   border-radius: 50%;
   margin-bottom: 30px;
   animation: spin 8s linear infinite;
 }
-.cat-history{
+
+.cat-history {
   color: #353232;
 }
+
 .history-item {
   padding: 8px;
   border-bottom: 1px dotted #eee;
@@ -436,12 +384,16 @@ footer {
 }
 
 @keyframes spin {
-  100% { transform: rotate(360deg); }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* 响应式调整 */
 @media (max-width: 900px) {
-  .left-decoration, .right-decoration {
+
+  .left-decoration,
+  .right-decoration {
     display: none;
   }
 }
